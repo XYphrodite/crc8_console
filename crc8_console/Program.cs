@@ -1,8 +1,4 @@
-﻿
-
-
-using System.Data.SqlTypes;
-using System.Globalization;
+﻿using System.Globalization;
 
 class Program
 {
@@ -45,22 +41,20 @@ class Program
         for (int i = 0; i < bytes.Count; i += 4)
         {
             var diff = bytes.Count - i;
-            if (diff - i >= 4)
+            if (diff >= 4)
             {
-                upd_bytes.Add(bytes[i + 3]);
-                upd_bytes.Add(bytes[i + 2]);
-                upd_bytes.Add(bytes[i + 1]);
-                upd_bytes.Add(bytes[i + 0]);
+                for (int j = 3; j >= 0; --j)
+                    upd_bytes.Add(bytes[i + j]);
             }
             else
             {
                 var diff2 = 4 - diff;
                 var _diff = diff;
-                while (diff-- > 0)
+                while (diff2-- > 0)
                     upd_bytes.Add(0x00);
 
-                while (diff2-- > 0)
-                    upd_bytes.Add(bytes[i + diff2]);
+                while (_diff-- > 0)
+                    upd_bytes.Add(bytes[i + _diff]);
 
             }
         }
@@ -75,7 +69,7 @@ class Program
 
         Console.Write("Command:\t");
         foreach (var b in bytes)
-            Console.Write("{0:X2} ",b);
+            Console.Write("{0:X2} ", b);
         Console.WriteLine("{0:X2}", crc);
 
         Console.WriteLine("Press any key...");
