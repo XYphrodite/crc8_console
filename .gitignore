@@ -1,0 +1,5 @@
+#ignoring specific directory
+crc8_console/bin/
+crc8_console/obj/
+#ignoring file extensions
+*.ATWP
